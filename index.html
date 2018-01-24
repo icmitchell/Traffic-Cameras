@@ -7,11 +7,12 @@
 	<meta name="viewport" content="initial-scale=1.0">
 	<script src="https://www.gstatic.com/firebasejs/4.8.2/firebase.js"></script>
 	<style>
+
       /* Always set the map height explicitly to define the size of the div
       * element that contains the map. */
       #map {
-      	height: 50%;
-      	width: 30%;
+      	height: 100%;
+      	width: 100%;
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
@@ -21,7 +22,8 @@
       }
   </style>
 
-
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD33v3jPg2qduZd9RKfh9tzLvs9RpmDMGQ&callback=initMap"
+  async defer></script>
 
 
 
@@ -29,7 +31,7 @@
 <body>
 	<div id="map"></div>
 	<script>
-  	var map;
+		var map;
 		function initMap() {
 			map = new google.maps.Map(document.getElementById('map'), {
 				center: {lat: 41.931791, lng: -87.726979},
@@ -50,23 +52,72 @@
   // ================================================================================
   // Get a reference to the database service
   var database = firebase.database();
-  database.ref().on("child_added", function (snapshot) {
-  	console.log(snapshot.val())
-  	console.log(1)
 
-  	var lat
-  	var long
 
-console.log("test")
+  var locationsRef = database.ref('locations');
+  locationsRef.on('value', function(snapshot) {
+  	snapshot.forEach(function(childSnapshot) {
+  		var childData = childSnapshot.val();
+  	});
+  });
+  locationsRef.on('child_added', function(snapshot) {
+
+
+
+  		if (snapshot.child("cameraObj").exists()) {
+  			var lat = snapshot.val().cameraObj.latitude
+  			var long = snapshot.val().cameraObj.longitude
+  			console.log(lat);
+  			var position = {lat: lat, lng: long};
+
+  			var infowindow = new google.maps.InfoWindow({
+  				content: snapshot.val().cameraObj.intersection
+  			});
+  		var icon = {
+          path: "M160.575,0v524.812h203.662V0H160.575z M347.662,508.237H177.148V16.571h170.514V508.237z M335.273,28.538H189.363v465.886   h145.911V28.538z M262.313,45.806c33.175,0,60.08,26.897,60.08,60.077c0,33.183-26.899,60.08-60.08,60.08   c-33.18,0-60.077-26.897-60.077-60.08C202.236,72.703,229.134,45.806,262.313,45.806z M262.313,182.075   c33.175,0,60.08,26.897,60.08,60.077c0,33.172-26.899,60.077-60.08,60.077c-33.18,0-60.077-26.894-60.077-60.077   C202.243,208.973,229.134,182.075,262.313,182.075z M262.405,442.185c-33.174,0-60.077-26.905-60.077-60.083   c0-33.177,26.897-60.077,60.077-60.077c33.183,0,60.077,26.9,60.077,60.077C322.477,415.279,295.576,442.185,262.405,442.185z    M299.224,106.246c0,20.381-16.521,36.904-36.91,36.904c-20.383,0-36.907-16.523-36.907-36.904   c0-20.383,16.524-36.906,36.907-36.906C282.703,69.34,299.224,85.869,299.224,106.246z",
+          fillColor: '#ff0000',
+          fillOpacity: 1,
+          scale: .07,
+          strokeColor: 'black',
+          strokeWeight: .7
+        };
+  			var marker = new google.maps.Marker({
+  				position: position,
+  				map: map,
+
+  				icon: icon
+  			})        
+  			marker.addListener('click', function() {
+  				infowindow.open(map, marker);
+  			})
+
+
+
+// var someStr = 'He said "Hello, my name is Foo"';
+// console.log(someStr.replace(/['"]+/g, ''));
+
+
+// console.log(snapshot.child("cameraObj").exists())
+};
+
+});
+
+
+  // database.ref().on("child_added", function (snapshot) {
+  	// console.log(snapshot.val());
+  	// console.log(1);
+
+  	// var lat
+  	// var long
+
 	// var marker = new google.maps.Marker({
 	// 	position: ,
 	// 	map: map
 	// 	})
 
-  	})
+  	// })
   </script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD33v3jPg2qduZd9RKfh9tzLvs9RpmDMGQ&callback=initMap"
-  async defer></script>
+
 
 
   <script type="text/javascript">
