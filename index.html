@@ -51,13 +51,13 @@
   // Get a reference to the database service
   var database = firebase.database();
   database.ref().on("child_added", function (snapshot) {
-  	console.log(snapshot.length)
+  	console.log(snapshot.val())
   	console.log(1)
 
   	var lat
   	var long
 
-
+console.log("test")
 	// var marker = new google.maps.Marker({
 	// 	position: ,
 	// 	map: map
