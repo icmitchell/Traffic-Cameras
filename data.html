@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="UTF-8">
+  <title>Cameras!</title>
+</head>
+<body>
+<!-- 
+CHICAGO coordinates
+Latitude‎: ‎41.881832
+Longitude‎: ‎-87.623177 
+database notes:
+        number: incrementing number (might not need)
+        cameraType: 1=redLight 2=speed
+        intersection: intersecting streets (string)
+        approach1: approach1 is 1st camera direction (string)
+        approach2: approach2 is 2nd camera direction (string)
+        approach3: approach3 is 3rd camera direction (string)
+        goLiveDate: goLiveDate date camera went live (date)
+        latitude: location (float)
+        longitude: location (float)
+        dateAdded: date put in database (date) 
+-->
+  <p id="demo"></p>
+  <!-- Text with spanID that gets filled with content -->
+  <p>please click</p>
+  <!-- Button -->
+  <button id="click-button">Click Me!!!!</button>
+  <!-- JQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- ================================================================================== -->
+<script src="https://www.gstatic.com/firebasejs/4.8.2/firebase.js"></script>
+<!--   // Initialize Firebase
+  // my sat-db database
+  /*var config = {
+    apiKey: "AIzaSyBnHem8IfuV2lWRzhDlMdS1TV1HR0IcqaY",
+    authDomain: "sat-db.firebaseapp.com",
+    databaseURL: "https://sat-db.firebaseio.com",
+    projectId: "sat-db",
+    storageBucket: "sat-db.appspot.com",
+    messagingSenderId: "662604380411"
+  };
+  firebase.initializeApp(config); -->
+<script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDYK8ax3uqWP-K6DkOg9S-r8_NYYrzJoG8",
+    authDomain: "cameras-1420a.firebaseapp.com",
+    databaseURL: "https://cameras-1420a.firebaseio.com",
+    projectId: "cameras-1420a",
+    storageBucket: "cameras-1420a.appspot.com",
+    messagingSenderId: "643375403696"
+  };
+  firebase.initializeApp(config);
+  // ================================================================================
+  // Get a reference to the database service
+  var database = firebase.database();
+  // Adding click event listener
+  $("#click-button").on("click", function() {
+    // empty firebase database
+      database.ref().set("");
+    // Constructing a queryURL using the animal name
+    var queryURL = "https://data.cityofchicago.org/api/views/thvf-6diy/rows.json?accessType=DOWNLOAD"  
+ 
+  console.log("queryURL "+queryURL);
+    // Performing an AJAX request with the queryURL
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    })
+    // After data comes back from the request
+    .then(function(response) {
+    // storing the data from the AJAX request in the results variable
+    var results = response.data;
+console.log("results length "+results.length);
+console.log("results "+results[0]);
+     var number = 0;
+     var intersection = "";
+     var approach1 = "";
+     var approach2 = "";
+     var approach3 = "";
+     var goLiveDate = "";
+     var latitude = "";
+     var longitude = "";
+     var redLight = 1;
+    // Looping through each result item
+    for (var i=0; i < results.length;i++)
+      {
+        var obj = JSON.stringify(results[i]).split(",");
+        document.getElementById("demo").innerHTML = obj;
+                
+        if ( i == 0)
+         {
+          for (var j = 0; j < obj.length; j++) 
+           {
+            //display one set of data
+             console.log("obj["+j+"]"+obj[j]);
+           }
+         } // end if i
+      
+      intersection = obj[8];
+      approach1 = obj[9];
+      approach2 = obj[10];
+      approach3 = obj[11];
+      goLiveDate = obj[12];
+      latitude = obj[13];
+      longitude = obj[14];
+      // Code for handling the push
+      var newRef = database.ref().push({
+        number: i,
+        cameraType: redLight,
+        intersection: intersection,
+        approach1: approach1,
+        approach2: approach2,
+        approach3: approach3,
+        goLiveDate: goLiveDate,
+        latitude: latitude,
+        longitude: longitude,
+        dateAdded: firebase.database.ServerValue.TIMESTAMP
+      });
+//    console.log("key "+newRef.key);
+//    console.log(i+" ===>intersection "+obj[8]);
+//    console.log("1st approach "+obj[9]+" 2nd "+obj[10]+" 3rd "+obj[11]);
+//    console.log("go live date "+obj[12]);
+//    console.log("latitude longitude "+obj[13]+" "+obj[14]);
+      } //end for i
+    });
+  });
+// //---------------------------------------------------------------
+// print out any changes to database in console
+/*
+    database.ref().on("value", function(snapshot) {
+      console.log(snapshot.val());
+    }, function(errorObject) {
+      console.log("The read failed: " + errorObject.code);
+    });
+*/
+  </script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<meta name="viewport" content="initial-scale=1.0">
+	<script src="https://www.gstatic.com/firebasejs/4.8.2/firebase.js"></script>
+	<style>
+      /* Always set the map height explicitly to define the size of the div
+      * element that contains the map. */
+      #map {
+      	height: 50%;
+      	width: 30%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+      	height: 100%;
+      	margin: 0;
+      	padding: 0;
+      }
+  </style>
+
+
+
+
+
+</head>
+<body>
+	<div id="map"></div>
+	<script>
+  	var map;
+		function initMap() {
+			map = new google.maps.Map(document.getElementById('map'), {
+				center: {lat: 41.931791, lng: -87.726979},
+				zoom: 8
+			});
+		}
+
+
+		var config = {
+			apiKey: "AIzaSyDYK8ax3uqWP-K6DkOg9S-r8_NYYrzJoG8",
+			authDomain: "cameras-1420a.firebaseapp.com",
+			databaseURL: "https://cameras-1420a.firebaseio.com",
+			projectId: "cameras-1420a",
+			storageBucket: "cameras-1420a.appspot.com",
+			messagingSenderId: "643375403696"
+		};
+		firebase.initializeApp(config);
+  // ================================================================================
+  // Get a reference to the database service
+  var database = firebase.database();
+  database.ref().on("child_added", function (snapshot) {
+  	console.log(snapshot.length)
+  	console.log(1)
+
+  	var lat
+  	var long
+
+
+	// var marker = new google.maps.Marker({
+	// 	position: ,
+	// 	map: map
+	// 	})
+
+  	})
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD33v3jPg2qduZd9RKfh9tzLvs9RpmDMGQ&callback=initMap"
+  async defer></script>
+
+
+  <script type="text/javascript">
+
+  	var queryURL1 = "https://data.cityofchicago.org/api/views/4i42-qv3h/rows.json?accessType=DOWNLOAD"
+  	var queryURL2 = "https://maps.googleapis.com/maps/api/js?key=AIzaSyD33v3jPg2qduZd9RKfh9tzLvs9RpmDMGQ&callback=initMap"
+
+
+
+
+  </script>
+
+</body>
+</html>
