@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Red Light Cameras </title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <meta name="viewport" content="initial-scale=1.0">
+  <script src="https://www.gstatic.com/firebasejs/4.8.2/firebase.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css" />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!--     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD33v3jPg2qduZd9RKfh9tzLvs9RpmDMGQ&callback=initMap"
+  async defer></script> -->
+    <style>
+
+      /* Always set the map height explicitly to define the size of the div
+      * element that contains the map. */
+      #map {
+        height: 100%;
+        width: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+  </style>
+ <h1 class="brand"> Red lights Cameras</h1>
+    <div class="wrapper">  
+      <div class="company-info">
+        <h3> Contact Us</h3>
+        <ul>
+          <li><i class="fa fa-road"></i> 100 North chicago ave </li>
+          <li><i class="fa fa-phone"></i> (312) 000-0000</li>
+          <li><i class="fa fa-envelope"></i> test@gmail.com</li>
+        </ul>
+      </div>
+      <div class="address-input">
+        <h3>Put your addres here</h3>
+        <form id="addressForm">
+          <p>
+            <label>Adress:</label>
+            <input type="text" name="address" id="address" required>
+          </p>
+          <p>
+            <label>Zipcode:</label>
+            <input type="text" name="zipcode" id="zipcode" required>
+          </p>
+          <p>
+            <label>city:</label>
+            <input type="text" name="city" id="city">
+          </p>
+          <p>
+            <label>state:</label>
+            <input type="text" name="state" id="state">
+          </p>
+          <p class="full">
+            <button type="submit" id="submit" href="index2.html"><h>Submit<h/></button>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="logic.js"></script>
+</body>
+</html>
