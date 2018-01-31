@@ -9,5 +9,5 @@ $("#submit").on("click", function(){
 	address = streetAddress+" "+city+" "+zipCode+" "+state;
 	console.log(address)
 	localStorage.setItem('address', address)
-	window.location.href = "addressDisplayMap.html";
+	window.location.href = "assets/html/addressDisplayMap.html";
 	});
