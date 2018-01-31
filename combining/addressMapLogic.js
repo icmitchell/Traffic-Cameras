@@ -41,14 +41,6 @@ var	zipCode
 var	city
 var	state
 
-
-// $(document).on("ready", function(){
-
-// 	address = 
-// 	placeMarker();
-
-// })
-
 function placeMarker() {
 	address = localStorage.getItem('address');
 	geocoder.geocode( {'address': address}, function(results, status) {
