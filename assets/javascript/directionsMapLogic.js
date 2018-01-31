@@ -156,43 +156,39 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
   }, function(response, status) {
     if (status == google.maps.DirectionsStatus.OK) {
       for (var i = 0; i < response.routes[0].overview_path.length; i++) {
-        var position = {
-          lat: response.routes[0].overview_path[i].lat(),
-          lng: response.routes[0].overview_path[i].lng()
-        }
-        var positionMin = {
-          lat: position.lat-.008,
-          lng: position.lng-.008
-        }
-        var positionMax = {
-          lat: position.lat+.008,
-          lng: position.lng+.008
-        }
-        for (var i = 0; i < camerasArray.length; i++) { 
-          if ((positionMin.lat<camerasArray[i].lat && camerasArray[i].lat<positionMax.lat) && (positionMin.lng<camerasArray[i].lng && camerasArray[i].lng<positionMax.lng)) {
-            var icon
-            if (camerasArray[i].type === 1) {
-              icon = iconRed
-            }
-            else if (camerasArray[i].type === 2) {
-              icon = iconSpeed
-            }
+        var position = new google.maps.LatLng(response.routes[0].overview_path[i].lat(), response.routes[0].overview_path[i].lng())
 
-            var newPosition = {
-              lat: camerasArray[i].lat,
-              lng: camerasArray[i].lng
-            }
-            var marker = new google.maps.Marker({
-              map: map,
-              position: newPosition,
-              icon: icon
-            });
+        for (var j = 0; j < camerasArray.length; j++) { 
+
+         var position1 = new google.maps.LatLng(camerasArray[j].lat, camerasArray[j].lng)
+
+         var distance = google.maps.geometry.spherical.computeDistanceBetween(position, position1)
+
+         if (distance<300) {
+          var icon
+          if (camerasArray[j].type === 1) {
+            icon = iconRed
           }
+          else if (camerasArray[j].type === 2) {
+            icon = iconSpeed
+          }
+
+          var newPosition = {
+            lat: camerasArray[j].lat,
+            lng: camerasArray[j].lng
+          }
+          var marker = new google.maps.Marker({
+            map: map,
+            position: newPosition,
+            icon: icon
+          });
         }
+
       }
-      directionsDisplay.setDirections(response);
-    } else {
-      window.alert('Directions request failed due to ' + status);
     }
-  });
+    directionsDisplay.setDirections(response);
+  } else {
+    window.alert('Directions request failed due to ' + status);
+  }
+});
 }
