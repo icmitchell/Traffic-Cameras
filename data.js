@@ -62,7 +62,7 @@
   var redLightCount=0;
   var speedCount = 0;
   var updateTime;
-  var timeBetweenUpdates = 0.5; // days
+  var timeBetweenUpdates = 1; // days
   var debug = 0;
 
   // query speed cameras 
@@ -127,7 +127,7 @@
 
   dateRef.once('value')
   .then(function(snapshot) {
-
+    console.log("hi")
     var datedb = snapshot.val(); 
     var tmpDate = JSON.stringify(datedb).split("\"");
     var updateTmp = tmpDate[3];

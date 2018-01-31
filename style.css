@@ -10,6 +10,10 @@
     padding:1em;
   }
   
+#map{
+  color: black;
+}
+
   .container{
     max-width:1170px;
     margin-left:auto;

@@ -81,6 +81,7 @@ database.ref('locations').on('child_added', function(snapshot) {
     var position = {
       lat: snapshot.val().cameraObj.latitude,
       lng: snapshot.val().cameraObj.longitude,
+      type: snapshot.val().cameraObj.cameraType,
       infoContent: infoContent
     };
     camerasArray.push(position);
@@ -160,29 +161,32 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
           lng: response.routes[0].overview_path[i].lng()
         }
         var positionMin = {
-          lat: position.lat-.001,
-          lng: position.lng-.001
+          lat: position.lat-.008,
+          lng: position.lng-.008
         }
         var positionMax = {
-          lat: position.lat+.001,
-          lng: position.lng+.001
+          lat: position.lat+.008,
+          lng: position.lng+.008
         }
         for (var i = 0; i < camerasArray.length; i++) { 
-          if ((positionMin.lat<camerasArray[i].lat && camerasArray[i].lat>positionMax.lat) && (positionMin.lng<camerasArray[i].lng && camerasArray[i].lng>positionMax.lng)) {
+          if ((positionMin.lat<camerasArray[i].lat && camerasArray[i].lat<positionMax.lat) && (positionMin.lng<camerasArray[i].lng && camerasArray[i].lng<positionMax.lng)) {
+            var icon
+            if (camerasArray[i].type === 1) {
+              icon = iconRed
+            }
+            else if (camerasArray[i].type === 2) {
+              icon = iconSpeed
+            }
+
             var newPosition = {
               lat: camerasArray[i].lat,
               lng: camerasArray[i].lng
             }
-            var infowindow = new google.maps.InfoWindow({
-              content: camerasArray[i].infoContent
-            });
             var marker = new google.maps.Marker({
               map: map,
-              position: newPosition
+              position: newPosition,
+              icon: icon
             });
-            marker.addListener('click', function() {
-              infowindow.open(map, marker);
-            }) 
           }
         }
       }
