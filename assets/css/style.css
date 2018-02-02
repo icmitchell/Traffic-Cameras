@@ -13,7 +13,6 @@
 #map{
   color: black;
 }
-
   .container{
     max-width:1170px;
     margin-left:auto;
@@ -172,3 +171,11 @@ ul{
     /* Visual */
     border-left: 0 none;
   }
+  #currentPage {
+    font-weight: bold;
+  }
+  #submit {
+    background-color: #685A5C;
+    font-size: 15px;
+  }
+
